@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import '../core/constants/app_colors.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -26,11 +28,14 @@ class _SignInPageState extends State<SignInPage> {
                   height: 80,
                   width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.teal.withOpacity(.1),
+                    color: AppColors.primaryLight10,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Icon(Icons.flight_takeoff,
-                      size: 40, color: Colors.teal),
+                  child: const Icon(
+                    Icons.flight_takeoff,
+                    size: 40,
+                    color: AppColors.primaryVariant,
+                  ),
                 ),
               ),
 
@@ -47,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
               const Text(
                 "Welcome back! Please enter your details.",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
 
               const SizedBox(height: 30),
@@ -57,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
                   hintText: "Email Address",
                   prefixIcon: const Icon(Icons.mail_outline),
                   filled: true,
-                  fillColor: Colors.grey.shade100,
+                  fillColor: AppColors.inputFill,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
@@ -73,9 +78,9 @@ class _SignInPageState extends State<SignInPage> {
                   hintText: "Password",
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
-                    icon: Icon(hidePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+                    icon: Icon(
+                      hidePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
                     onPressed: () {
                       setState(() {
                         hidePassword = !hidePassword;
@@ -83,7 +88,7 @@ class _SignInPageState extends State<SignInPage> {
                     },
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade100,
+                  fillColor: AppColors.inputFill,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
@@ -96,7 +101,9 @@ class _SignInPageState extends State<SignInPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/forgot-password');
+                  },
                   child: const Text("Forgot password?"),
                 ),
               ),
@@ -107,10 +114,10 @@ class _SignInPageState extends State<SignInPage> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // demo navigation only
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
+                    backgroundColor: AppColors.primaryVariant,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -118,8 +125,9 @@ class _SignInPageState extends State<SignInPage> {
                   child: const Text(
                     "Sign In",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                      color: AppColors.textOnPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -153,11 +161,31 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 30),
 
               Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text("Skip for now"),
+                child: RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "Sign Up",
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                      ),
+                    ],
+                  ),
                 ),
               ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),
