@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
+import '../core/widgets/shared_bottom_nav_bar.dart';
 
 class HomeScreenPage extends StatelessWidget {
   const HomeScreenPage({super.key});
@@ -206,8 +207,8 @@ class HomeScreenPage extends StatelessWidget {
         ),
       ),
 
-      // ===== PROFESSIONAL BOTTOM NAV BAR =====
-      bottomNavigationBar: const ProfessionalBottomNavBar(),
+      // ===== SHARED BOTTOM NAV BAR =====
+      bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/home'),
     );
   }
 }
@@ -339,114 +340,4 @@ class _DestinationCard extends StatelessWidget {
   }
 }
 
-// ===== PROFESSIONAL BOTTOM NAVIGATION BAR =====
-class ProfessionalBottomNavBar extends StatelessWidget {
-  const ProfessionalBottomNavBar({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Bottom Bar Background
-          Container(
-            height: 60,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                _BottomNavItem(icon: Icons.home, label: "Home", active: true),
-                _BottomNavItem(icon: Icons.event_note, label: "Plans"),
-                SizedBox(width: 60), // space for center button
-                _BottomNavItem(icon: Icons.explore, label: "Map"),
-                _BottomNavItem(icon: Icons.person, label: "Profile"),
-              ],
-            ),
-          ),
-
-          // Center Floating Button
-          Positioned(
-            top: -20,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryLight20,
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.auto_awesome,
-                    color: AppColors.textOnPrimary,
-                    size: 32,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ===== NAV ITEM WIDGET =====
-class _BottomNavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool active;
-
-  const _BottomNavItem({
-    required this.icon,
-    required this.label,
-    this.active = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 28,
-          color: active ? AppColors.primary : AppColors.textSecondary,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w600,
-            color: active ? AppColors.primary : AppColors.textSecondary,
-          ),
-        ),
-      ],
-    );
-  }
-}

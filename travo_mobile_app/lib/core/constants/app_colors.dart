@@ -13,17 +13,17 @@ class AppColors {
   // Primary Colors
   // ===========================
 
-  /// Primary brand color - Fresh green
-  static const Color primary = Color(0xFF4CAF50);
+  /// Primary brand color - Deep teal (headers, main CTA)
+  static const Color primary = Color(0xFF0A445A);
 
-  /// Primary variant - Light green
-  static const Color primaryVariant = Color(0xFF66BB6A);
+  /// Primary variant - Same as primary for consistency
+  static const Color primaryVariant = Color(0xFF0A445A);
 
-  /// Accent color - Mint green
-  static const Color accent = Color(0xFF00E676);
+  /// Accent color - Interactive blue (links, icons, focus)
+  static const Color accent = Color(0xFF13418C);
 
-  /// Secondary color - Soft green
-  static const Color secondary = Color(0xFF81C784);
+  /// Secondary color - Neutral accent (timelines, tags)
+  static const Color secondary = Color(0xFFB9B3AB);
 
   // ===========================
   // Background Colors
@@ -35,26 +35,26 @@ class AppColors {
   /// Surface color for cards and elevated elements
   static const Color surface = Color(0xFFFFFFFF);
 
-  /// Light surface color
-  static const Color surfaceLight = Color(0xFFF5F5F5);
+  /// Section background color
+  static const Color surfaceLight = Color(0xFFDDDDDD);
 
   // ===========================
   // Text Colors
   // ===========================
 
-  /// Primary text color - Dark slate
-  static const Color textPrimary = Color(0xFF1E293B);
+  /// Primary text color - Black
+  static const Color textPrimary = Color(0xFF000000);
 
-  /// Secondary text color - Grey
-  static const Color textSecondary = Color(0xFF64748B);
+  /// Secondary text color - Dark grey
+  static const Color textSecondary = Color(0xFF4C4C4C);
 
-  /// Disabled text color
-  static const Color textDisabled = Color(0xFF94A3B8);
+  /// Disabled text color / Placeholder
+  static const Color textDisabled = Color(0xFFBDBDBD);
 
-  /// Text on primary color background
+  /// Text on primary color background (dark surfaces)
   static const Color textOnPrimary = Color(0xFFFFFFFF);
 
-  /// Text on accent color background
+  /// Text on accent color background (dark surfaces)
   static const Color textOnAccent = Color(0xFFFFFFFF);
 
   // ===========================
@@ -62,13 +62,13 @@ class AppColors {
   // ===========================
 
   /// Border color
-  static const Color border = Color(0xFFE2E8F0);
+  static const Color border = Color(0xFFDDDDDD);
 
   /// Divider color
-  static const Color divider = Color(0xFFCBD5E1);
+  static const Color divider = Color(0xFFDDDDDD);
 
   /// Input field fill color
-  static const Color inputFill = Color(0xFFF1F5F9);
+  static const Color inputFill = Color(0xFFF5F5F5);
 
   /// Shadow color
   static const Color shadow = Color(0x1A000000);
@@ -114,8 +114,14 @@ class AppColors {
   /// Black with 20% opacity
   static Color get blackLight20 => Colors.black.withValues(alpha: 0.2);
 
+  /// White with 50% opacity (overlay cards)
+  static Color get whiteLight50 => Colors.white.withValues(alpha: 0.5);
+
   /// White with 90% opacity
   static Color get whiteLight90 => Colors.white.withValues(alpha: 0.9);
+
+  /// Black with 50% opacity (modal backdrop)
+  static Color get modalBackdrop => Colors.black.withValues(alpha: 0.5);
 
   // ===========================
   // Gradient Colors
@@ -125,14 +131,14 @@ class AppColors {
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primary, primaryVariant],
+    colors: [primary, accent],
   );
 
   /// Accent gradient
   static const LinearGradient accentGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [accent, secondary],
+    colors: [accent, primary],
   );
 
   /// Subtle background gradient

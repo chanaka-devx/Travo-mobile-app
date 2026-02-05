@@ -7,6 +7,10 @@ import 'pages/signup_page.dart';
 import 'pages/otp_verification_page.dart';
 import 'pages/user_details_setup_page.dart';
 import 'pages/home_screen_page.dart';
+import 'pages/ai_chat_page.dart';
+import 'pages/profile_page.dart';
+import 'pages/edit_profile_page.dart';
+import 'pages/my_stories_page.dart';
 
 void main() {
   runApp(const TravoApp());
@@ -30,6 +34,10 @@ class TravoApp extends StatelessWidget {
         '/otp-verification': (context) => const OtpVerificationPage(),
         '/user-details-setup': (context) => const UserDetailsSetupPage(),
         '/home': (context) => const HomeScreenPage(),
+        '/ai-chat': (context) => const AiChatPage(),
+        '/profile': (context) => const ProfilePage(),
+        '/edit-profile': (context) => const EditProfilePage(),
+        '/story': (context) => const MyStoriesPage(),
       },
     );
   }
