@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import '../core/constants/app_colors.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
-
-  static const Color primary = Color.fromRGBO(10, 68, 90, 1);
-  static const Color coral = Color(0xFFFF7D62);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class WelcomePage extends StatelessWidget {
                       Text(
                         "TRAVO",
                         style: TextStyle(
-                          color: primary,
+                          color: AppColors.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 6,
@@ -58,7 +56,7 @@ class WelcomePage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xFF1E293B),
+                              color: AppColors.textPrimary,
                             ),
                           ),
                           SizedBox(height: 4),
@@ -70,7 +68,7 @@ class WelcomePage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w600,
-                                    color: coral,
+                                    color: AppColors.accent,
                                   ),
                                 ),
                                 TextSpan(
@@ -78,7 +76,7 @@ class WelcomePage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w500,
-                                    color: Color(0xFF1E293B),
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ],
@@ -96,8 +94,8 @@ class WelcomePage extends StatelessWidget {
                             height: 56,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: primary,
-                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.textOnPrimary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -108,8 +106,10 @@ class WelcomePage extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  Text("Get Started",
-                                      style: TextStyle(fontSize: 16)),
+                                  Text(
+                                    "Get Started",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                   SizedBox(width: 8),
                                   Icon(Icons.arrow_forward),
                                 ],
@@ -125,17 +125,21 @@ class WelcomePage extends StatelessWidget {
                             child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                    color: primary.withOpacity(0.2)),
+                                  color: AppColors.primaryLight20,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(context, '/signin');
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/home',
+                                );
                               },
                               child: const Text(
                                 "Continue as Guest",
-                                style: TextStyle(color: primary),
+                                style: TextStyle(color: AppColors.primary),
                               ),
                             ),
                           ),
@@ -149,12 +153,14 @@ class WelcomePage extends StatelessWidget {
                             child: Text.rich(
                               TextSpan(
                                 text: "Already have an account? ",
-                                style: const TextStyle(color: Colors.grey),
+                                style: const TextStyle(
+                                  color: AppColors.textSecondary,
+                                ),
                                 children: [
                                   TextSpan(
                                     text: "Log In",
                                     style: TextStyle(
-                                      color: primary,
+                                      color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
