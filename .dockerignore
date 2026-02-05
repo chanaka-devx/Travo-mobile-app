@@ -1,0 +1,50 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+node_modules/
+.pub-cache/
+.dart_tool/
+
+# Build artifacts
+/build/
+/dist/
+*.apk
+*.app
+*.aab
+.gradle/
+
+# Test files
+/test/
+/coverage/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+azure-pipelines.yml
+
+# Temporary files
+*.log
+*.tmp
+*.temp
