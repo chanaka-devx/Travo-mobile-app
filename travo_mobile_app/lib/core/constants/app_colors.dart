@@ -13,17 +13,17 @@ class AppColors {
   // Primary Colors
   // ===========================
 
-  /// Primary brand color - Deep teal (headers, main CTA)
-  static const Color primary = Color(0xFF0A445A);
+  /// Primary brand color - Standard green (headers, main CTA)
+  static const Color primary = Color(0xFF2E7D32);
 
-  /// Primary variant - Same as primary for consistency
-  static const Color primaryVariant = Color(0xFF0A445A);
+  /// Primary variant - Darker green for emphasis
+  static const Color primaryVariant = Color(0xFF1B5E20);
 
-  /// Accent color - Interactive blue (links, icons, focus)
-  static const Color accent = Color(0xFF13418C);
+  /// Accent color - Lighter green (links, icons, focus)
+  static const Color accent = Color(0xFF43A047);
 
-  /// Secondary color - Neutral accent (timelines, tags)
-  static const Color secondary = Color(0xFFB9B3AB);
+  /// Secondary color - Soft green accent (timelines, tags)
+  static const Color secondary = Color(0xFFAED581);
 
   // ===========================
   // Background Colors
@@ -78,7 +78,7 @@ class AppColors {
   // ===========================
 
   /// Success color
-  static const Color success = Color(0xFF10B981);
+  static const Color success = Color(0xFF2E7D32);
 
   /// Warning color
   static const Color warning = Color(0xFFF59E0B);
@@ -87,7 +87,7 @@ class AppColors {
   static const Color error = Color(0xFFEF4444);
 
   /// Info color
-  static const Color info = Color(0xFF3B82F6);
+  static const Color info = Color(0xFF388E3C);
 
   // ===========================
   // Transparent Variations

@@ -91,7 +91,7 @@ class HomeScreenPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Explore the",
+                      "Explore",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w300,

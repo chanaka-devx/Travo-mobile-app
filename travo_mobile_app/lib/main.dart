@@ -11,6 +11,10 @@ import 'pages/ai_chat_page.dart';
 import 'pages/profile_page.dart';
 import 'pages/edit_profile_page.dart';
 import 'pages/my_stories_page.dart';
+import 'pages/recommendations_overlay_page.dart';
+import 'pages/place_details_page.dart';
+import 'pages/transportation_page.dart';
+import 'pages/adventure_page.dart';
 
 void main() {
   runApp(const TravoApp());
@@ -38,6 +42,10 @@ class TravoApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/edit-profile': (context) => const EditProfilePage(),
         '/story': (context) => const MyStoriesPage(),
+        '/recommendations': (context) => const TravoRecommendationsPage(),
+        '/place-details': (context) => const TravoPlaceDetailsPage(),
+        '/transportation': (context) => const TransportationPage(),
+        '/adventure': (context) => const TravoAdventurePage(),
       },
     );
   }
