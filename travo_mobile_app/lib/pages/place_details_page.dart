@@ -44,24 +44,29 @@ class TravoPlaceDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _glassIcon(
-                    Icons.arrow_back_ios_new,
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  Row(
-                    children: [
-                      _glassIcon(Icons.share, onTap: () {}),
-                      const SizedBox(width: 12),
-                      _glassIcon(Icons.favorite_border, onTap: () {}),
-                    ],
-                  ),
-                ],
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _glassIcon(
+                      Icons.arrow_back_ios_new,
+                      onTap: () => Navigator.pop(context),
+                    ),
+                    Row(
+                      children: [
+                        _glassIcon(Icons.share, onTap: () {}),
+                        const SizedBox(width: 12),
+                        _glassIcon(Icons.favorite_border, onTap: () {}),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

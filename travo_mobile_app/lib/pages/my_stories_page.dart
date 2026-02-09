@@ -92,19 +92,23 @@ class _StoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow,
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/story-details', arguments: title);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow,
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Image
@@ -115,7 +119,7 @@ class _StoryCard extends StatelessWidget {
             ),
             child: Image.network(
               imageUrl,
-              height: 200,
+              height: 140,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -130,7 +134,7 @@ class _StoryCard extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
@@ -140,14 +144,14 @@ class _StoryCard extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.calendar_today,
-                      size: 16,
+                      size: 14,
                       color: AppColors.textSecondary,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       "$startDate - $endDate",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -157,6 +161,7 @@ class _StoryCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

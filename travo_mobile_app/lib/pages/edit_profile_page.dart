@@ -122,20 +122,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Icons.person_outline,
                       color: AppColors.textSecondary,
                     ),
-                    isDense: true,
-                    border: UnderlineInputBorder(
+                    filled: true,
+                    fillColor: AppColors.inputFill,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(
                         color: AppColors.primary,
                         width: 2,
                       ),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   ),
                   style: const TextStyle(
                     fontSize: 15,
@@ -162,20 +166,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Icons.email_outlined,
                       color: AppColors.textSecondary,
                     ),
-                    isDense: true,
-                    border: UnderlineInputBorder(
+                    filled: true,
+                    fillColor: AppColors.inputFill,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(
                         color: AppColors.primary,
                         width: 2,
                       ),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   style: const TextStyle(
@@ -203,20 +211,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Icons.phone_outlined,
                       color: AppColors.textSecondary,
                     ),
-                    isDense: true,
-                    border: UnderlineInputBorder(
+                    filled: true,
+                    fillColor: AppColors.inputFill,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(color: AppColors.border),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide(
                         color: AppColors.primary,
                         width: 2,
                       ),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   ),
                   keyboardType: TextInputType.phone,
                   style: const TextStyle(

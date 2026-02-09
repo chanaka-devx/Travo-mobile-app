@@ -172,16 +172,35 @@ class TransportationPage extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Icon(Icons.auto_awesome, color: AppColors.primary),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.primaryLight10,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.mic, color: AppColors.primary),
+                onPressed: () {},
+              ),
+            ),
             const SizedBox(width: 8),
-            const Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Describe changes you want...',
-                  border: InputBorder.none,
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.inputFill,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Describe changes you want...',
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
                 ),
               ),
             ),
+            const SizedBox(width: 8),
             Container(
               decoration: const BoxDecoration(
                 color: AppColors.primary,
