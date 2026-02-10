@@ -8,18 +8,13 @@ class TravoAdventurePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFB),
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Column(
-              children: [
-                _buildHeader(context),
-                Expanded(child: _buildTimeline()),
-              ],
-            ),
-          ),
-          _buildBottomNav(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(context),
+            Expanded(child: _buildTimeline()),
+          ],
+        ),
       ),
     );
   }
@@ -51,7 +46,7 @@ class TravoAdventurePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    'Japan Adventure',
+                    'Sri Lanka Adventure',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   Text(
@@ -83,10 +78,10 @@ class TravoAdventurePage extends StatelessWidget {
         const SizedBox(height: 16),
         _buildTimelineItem(
           index: '1',
-          title: 'Tokyo Arrival',
+          title: 'Colombo Arrival',
           subtitle: 'Oct 12 - Oct 15 • 3 Nights',
           tag: 'Flight',
-          stay: 'Shibuya Stream Hotel',
+          stay: 'Hilton Hotel',
           stayInfo: 'Check-in 3 PM',
           icon: Icons.hotel,
           mapImage:
@@ -96,10 +91,10 @@ class TravoAdventurePage extends StatelessWidget {
         const SizedBox(height: 16),
         _buildTimelineItem(
           index: '2',
-          title: 'Kyoto Temples',
+          title: 'Galle',
           subtitle: 'Oct 15 - Oct 19 • 4 Nights',
           tag: 'Train',
-          stay: 'Ryokan Yoshida-sanso',
+          stay: 'Galle Fort Hotel',
           stayInfo: '4.8 Rating • Luxury',
           icon: Icons.star,
           iconColor: AppColors.warning,
@@ -110,10 +105,10 @@ class TravoAdventurePage extends StatelessWidget {
         const SizedBox(height: 16),
         _buildTimelineItem(
           index: '3',
-          title: 'Osaka Food Tour',
+          title: 'Yala Park',
           subtitle: 'Oct 19 - Oct 22 • 3 Nights',
           tag: 'Bus',
-          stay: 'Conrad Osaka Hotel',
+          stay: 'Yala Safari Hotel',
           stayInfo: 'Breakfast Included',
           icon: Icons.restaurant,
           mapImage:
@@ -326,75 +321,5 @@ class TravoAdventurePage extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNav() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        height: 72,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          color: AppColors.surface.withValues(alpha: 0.95),
-          border: Border(top: BorderSide(color: AppColors.divider)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _navItem(Icons.home, 'Home'),
-            _navItem(Icons.event_note, 'Plans', isActive: true),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(12),
-                  ),
-                  child: const Icon(
-                    Icons.auto_awesome,
-                    size: 28,
-                    color: AppColors.textOnPrimary,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                const Text(
-                  'AI Assist',
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-            _navItem(Icons.explore, 'Map'),
-            _navItem(Icons.person_outline, 'Profile'),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _navItem(IconData icon, String label, {bool isActive = false}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          color: isActive ? AppColors.primary : AppColors.textSecondary,
-        ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
-            color: isActive ? AppColors.primary : AppColors.textSecondary,
-          ),
-        ),
-      ],
-    );
-  }
 }

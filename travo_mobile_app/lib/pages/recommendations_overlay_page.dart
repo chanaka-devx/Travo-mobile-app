@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
-import '../core/widgets/shared_bottom_nav_bar.dart';
 
 class TravoRecommendationsPage extends StatelessWidget {
   const TravoRecommendationsPage({super.key});
@@ -18,7 +17,6 @@ class TravoRecommendationsPage extends StatelessWidget {
           _bottomSheet(context),
         ],
       ),
-      bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/ai-chat'),
     );
   }
 
@@ -352,14 +350,14 @@ const List<RecommendationItem> _demoRecommendations = [
   RecommendationItem(
     imageUrl:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuACWWMzHvuZzWYuq1tXXagREhlC4eFYSN67pYXS1Fh-VIgi6E_iPGL79hIZXhrE7lRYANDqW7dxWoVzHWUWMN8nvJ7aHZu472KTY3xe-ksoaxHVwSeO27EeQTYQLijcQfYBD0R2qEhZ4JTESoYvPdC23iDE6HENi4130TKKzIw5DS9CbqPObBVyAX7j6S083Uji6qqVfwyoatBAz0uEusqmgAu5djpbNoLH3KI5m2kNqFOuF6xw8Ig8nVX-ImTw1qacVTo0MGyqyJY',
-    title: 'Niladri Reservoir',
-    location: 'Tekerchat, Sunamgnj',
+    title: 'Mirissa Beach',
+    location: 'Galle Road, Mirissa',
     rating: '4.8',
   ),
   RecommendationItem(
     imageUrl:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuD2c69Wp7sacY9G9gy1jwH_POZYVbH6oyyvf8uuFoU3xpGRt660cs9FGG7pYqMnyv-Rw5YDB_s0EG0U4EpzlAoD6ScxS6yZtwWJ37y8h13Bk1qVXl8r7xI7s9C87qpY4giQ7JKdtFucyzdAGQUxj34a0xFZ2CDFQCewdqCzNPMiBaycTtfSiLjwG6RvOcfW6FcMSw9NuGee3wiNJlTD3UqrVEOmlemjLSxOJuia7ZfDkm778EDEr2hh-MCTmYa2HkLCZvH3Fo2JJ8w',
-    title: 'Highland Resort',
+    title: 'Yala Park',
     location: 'Darma Valley',
     rating: '4.5',
   ),

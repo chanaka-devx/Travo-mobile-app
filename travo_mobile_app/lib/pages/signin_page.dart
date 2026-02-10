@@ -15,13 +15,31 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: 12),
+
+              // ===== HEADER WITH BACK BUTTON =====
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () => Navigator.pop(context),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_back_ios_new, size: 28),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
 
               Center(
                 child: Container(
@@ -44,7 +62,11 @@ class _SignInPageState extends State<SignInPage> {
               const Text(
                 "Sign in to Travo",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
               ),
 
               const SizedBox(height: 8),
@@ -60,12 +82,17 @@ class _SignInPageState extends State<SignInPage> {
               TextField(
                 decoration: InputDecoration(
                   hintText: "Email Address",
+                  hintStyle: const TextStyle(color: AppColors.textDisabled),
                   prefixIcon: const Icon(Icons.mail_outline),
                   filled: true,
                   fillColor: AppColors.inputFill,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppColors.primary, width: 2),
                   ),
                 ),
               ),
@@ -76,6 +103,7 @@ class _SignInPageState extends State<SignInPage> {
                 obscureText: hidePassword,
                 decoration: InputDecoration(
                   hintText: "Password",
+                  hintStyle: const TextStyle(color: AppColors.textDisabled),
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -92,6 +120,10 @@ class _SignInPageState extends State<SignInPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: const BorderSide(color: AppColors.primary, width: 2),
                   ),
                 ),
               ),
@@ -111,32 +143,62 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 10),
 
               SizedBox(
+                width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/home');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryVariant,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.textOnPrimary,
+                    elevation: 2,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: const Text(
                     "Sign In",
                     style: TextStyle(
-                      color: AppColors.textOnPrimary,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 40),
 
-              const Center(child: Text("Or continue with")),
+              // ===== OR SIGN IN WITH =====
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: AppColors.divider,
+                      thickness: 1,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      "Or sign in with",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: AppColors.divider,
+                      thickness: 1,
+                    ),
+                  ),
+                ],
+              ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               Row(
                 children: [

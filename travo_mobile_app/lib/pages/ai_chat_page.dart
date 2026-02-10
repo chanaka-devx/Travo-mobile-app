@@ -139,17 +139,20 @@ class _AiChatPageState extends State<AiChatPage> {
                         icon: const Icon(
                           Icons.mic,
                           color: AppColors.primary,
+                          size: 20,
                         ),
+                        padding: const EdgeInsets.all(8),
+                        constraints: const BoxConstraints(),
                         onPressed: () {},
                       ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
                         decoration: BoxDecoration(
                           color: AppColors.inputFill,
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextField(
                           controller: _messageController,
@@ -157,10 +160,13 @@ class _AiChatPageState extends State<AiChatPage> {
                             hintText: "Ask anything...",
                             hintStyle: TextStyle(
                               color: AppColors.textDisabled,
+                              fontSize: 14,
                             ),
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(vertical: 8),
+                            isDense: true,
                           ),
                         ),
                       ),
@@ -175,15 +181,17 @@ class _AiChatPageState extends State<AiChatPage> {
                         icon: const Icon(
                           Icons.send,
                           color: AppColors.textOnPrimary,
-                          size: 20,
+                          size: 18,
                         ),
+                        padding: const EdgeInsets.all(8),
+                        constraints: const BoxConstraints(),
                         onPressed: _sendMessage,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
             ],
           ),
           if (destinations.isNotEmpty)

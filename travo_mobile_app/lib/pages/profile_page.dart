@@ -190,6 +190,23 @@ class ProfilePage extends StatelessWidget {
                   onTap: () {},
                 ),
 
+                const SizedBox(height: 12),
+
+                _MenuItem(
+                  icon: Icons.logout,
+                  title: "Logout",
+                  subtitle: "Sign out of your account",
+                  iconColor: const Color(0xFFD32F2F),
+                  iconBackground: const Color(0xFFD32F2F).withValues(alpha: 0.1),
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/signin',
+                      (route) => false,
+                    );
+                  },
+                ),
+
                 const SizedBox(height: 48),
               ],
             ),

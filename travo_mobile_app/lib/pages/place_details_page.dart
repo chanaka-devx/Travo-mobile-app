@@ -82,7 +82,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Niladri Reservoir',
+                        'Mirissa Beach',
                         style: TextStyle(
                           color: AppColors.textOnPrimary,
                           fontSize: 28,
@@ -99,7 +99,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                           ),
                           SizedBox(width: 4),
                           Text(
-                            'Tekerghat, Sunamganj',
+                            'Galle Road, Mirissa',
                             style: TextStyle(color: Colors.white70),
                           ),
                         ],
