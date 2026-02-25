@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../core/constants/app_colors.dart';
 import '../core/widgets/shared_bottom_nav_bar.dart';
 import '../data/adventure_data.dart';
@@ -12,11 +13,44 @@ class MyStoriesPage extends StatefulWidget {
 
 class _MyStoriesPageState extends State<MyStoriesPage> {
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App'),
+        content: const Text('Do you want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Exit'),
+          ),
+        ],
+      ),
+    );
+    
+    if (shouldExit == true) {
+      SystemNavigator.pop();
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final allTrips = getAllTrips();
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (!didPop) {
+          await _onWillPop(context);
+        }
+      },
+      child: Scaffold(
       backgroundColor: AppColors.surfaceLight,
       appBar: AppBar(
         backgroundColor: AppColors.background,
@@ -84,6 +118,7 @@ class _MyStoriesPageState extends State<MyStoriesPage> {
               ),
       ),
       bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/story'),
+      ),
     );
   }
 }

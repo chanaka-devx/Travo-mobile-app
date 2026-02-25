@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
 import '../data/explore_categories_data.dart';
 
-class ExploreCategoryPage extends StatelessWidget {
+class ExploreCategoryPage extends StatefulWidget {
   final ExploreCategoryData categoryData;
 
   const ExploreCategoryPage({
@@ -11,21 +11,28 @@ class ExploreCategoryPage extends StatelessWidget {
   });
 
   @override
+  State<ExploreCategoryPage> createState() => _ExploreCategoryPageState();
+}
+
+class _ExploreCategoryPageState extends State<ExploreCategoryPage> {
+  final List<ExploreItem> _selectedItems = [];
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
+      body: Column(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 20),
-                _buildSection1(),
-                const SizedBox(height: 30),
-                _buildSection2(),
-                const SizedBox(height: 120),
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(context),
+                  const SizedBox(height: 20),
+                  _buildSection1(),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
           _buildBottomBar(),
@@ -43,7 +50,7 @@ class ExploreCategoryPage extends StatelessWidget {
           height: headerHeight,
           width: double.infinity,
           child: Image.network(
-            categoryData.headerImageUrl,
+            widget.categoryData.headerImageUrl,
             fit: BoxFit.cover,
           ),
         ),
@@ -90,7 +97,7 @@ class ExploreCategoryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                categoryData.headerTitle,
+                widget.categoryData.headerTitle,
                 style: const TextStyle(
                   color: AppColors.textOnPrimary,
                   fontSize: 22,
@@ -103,7 +110,7 @@ class ExploreCategoryPage extends StatelessWidget {
                   Icon(_getCategoryIcon(), color: Colors.white, size: 16),
                   const SizedBox(width: 6),
                   Text(
-                    categoryData.headerSubtitle,
+                    widget.categoryData.headerSubtitle,
                     style: const TextStyle(color: Colors.white70),
                   ),
                 ],
@@ -116,7 +123,7 @@ class ExploreCategoryPage extends StatelessWidget {
   }
 
   IconData _getCategoryIcon() {
-    switch (categoryData.categoryName) {
+    switch (widget.categoryData.categoryName) {
       case 'Food':
         return Icons.restaurant;
       case 'Stays':
@@ -153,7 +160,7 @@ class ExploreCategoryPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            categoryData.section1Title,
+            widget.categoryData.section1Title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
@@ -163,129 +170,202 @@ class ExploreCategoryPage extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: categoryData.section1Items.length,
+            itemCount: widget.categoryData.section1Items.length,
             separatorBuilder: (context, index) => const SizedBox(width: 14),
             itemBuilder: (context, index) {
-              final item = categoryData.section1Items[index];
+              final item = widget.categoryData.section1Items[index];
+              final isSelected = _selectedItems.contains(item);
               return _itemCard(
-                item.title,
-                item.imageUrl,
-                item.rating.toString(),
-                item.priceRange ?? '',
+                item,
+                isSelected,
               );
             },
           ),
         ),
+        if (_selectedItems.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'Selected Options (${_selectedItems.length})',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 200,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: _selectedItems.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 14),
+              itemBuilder: (context, index) {
+                final item = _selectedItems[index];
+                return _selectedItemCard(item);
+              },
+            ),
+          ),
+        ],
       ],
     );
   }
 
-  Widget _itemCard(String title, String imageUrl, String rate, String price) {
-    return SizedBox(
-      width: 140,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.network(
-              imageUrl,
-              height: 120,
-              width: 140,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Row(
-            children: [
-              const Icon(Icons.star, size: 14, color: AppColors.warning),
-              const SizedBox(width: 4),
-              Text(rate),
-              const Spacer(),
-              if (price.isNotEmpty) Text(price),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSection2() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            categoryData.section2Title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
-          ...categoryData.section2Items.map((item) => _listTile(
-                item.title,
-                item.imageUrl,
-                item.rating.toString(),
-                item.priceRange,
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget _listTile(String title, String imageUrl, String rating, String? price) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              imageUrl,
-              height: 70,
-              width: 70,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _itemCard(ExploreItem item, bool isSelected) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (isSelected) {
+            _selectedItems.remove(item);
+          } else {
+            _selectedItems.add(item);
+          }
+        });
+      },
+      child: SizedBox(
+        width: 140,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network(
+                    item.imageUrl,
+                    height: 120,
+                    width: 140,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    const Icon(Icons.star, size: 14, color: AppColors.warning),
-                    const SizedBox(width: 4),
-                    Text(rating),
-                    if (price != null && price.isNotEmpty) ...[
-                      const SizedBox(width: 8),
-                      Text(price, style: const TextStyle(color: AppColors.textSecondary)),
-                    ],
-                  ],
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.primary : Colors.white.withValues(alpha: 0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      isSelected ? Icons.check : Icons.add,
+                      color: isSelected ? Colors.white : AppColors.primary,
+                      size: 18,
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 6),
+            Text(
+              item.title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Row(
+              children: [
+                const Icon(Icons.star, size: 14, color: AppColors.warning),
+                const SizedBox(width: 4),
+                Text(item.rating.toString()),
+                const Spacer(),
+                if (item.priceRange != null && item.priceRange!.isNotEmpty)
+                  Text(item.priceRange!, style: const TextStyle(fontSize: 12)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _selectedItemCard(ExploreItem item) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedItems.remove(item);
+        });
+      },
+      child: SizedBox(
+        width: 140,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network(
+                    item.imageUrl,
+                    height: 120,
+                    width: 140,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  height: 120,
+                  width: 140,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.primary, width: 2),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: AppColors.error,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              item.title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Row(
+              children: [
+                const Icon(Icons.star, size: 14, color: AppColors.warning),
+                const SizedBox(width: 4),
+                Text(item.rating.toString()),
+                const Spacer(),
+                if (item.priceRange != null && item.priceRange!.isNotEmpty)
+                  Text(item.priceRange!, style: const TextStyle(fontSize: 12)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildBottomBar() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
+    return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

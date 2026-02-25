@@ -16,7 +16,7 @@ class SharedBottomNavBar extends StatelessWidget {
           // Bottom Bar Background
           Container(
             height: 60,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(horizontal: 24),
             decoration: BoxDecoration(
               color: AppColors.surface,
               borderRadius: BorderRadius.circular(30),
@@ -73,7 +73,7 @@ class SharedBottomNavBar extends StatelessWidget {
                   }
                 },
                 child: Container(
-                  width: 70,
+                  width: 65,
                   height: 70,
                   decoration: BoxDecoration(
                     color: activeRoute == '/ai-chat'

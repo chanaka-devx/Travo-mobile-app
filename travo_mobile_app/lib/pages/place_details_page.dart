@@ -9,7 +9,7 @@ import 'explore_category_page.dart';
 import 'place_group_chat_page.dart';
 import 'place_reviews_page.dart';
 
-class TravoPlaceDetailsPage extends StatelessWidget {
+class TravoPlaceDetailsPage extends StatefulWidget {
   final String title;
   final String location;
   final String imageUrl;
@@ -26,6 +26,38 @@ class TravoPlaceDetailsPage extends StatelessWidget {
   });
 
   @override
+  State<TravoPlaceDetailsPage> createState() => _TravoPlaceDetailsPageState();
+}
+
+class _TravoPlaceDetailsPageState extends State<TravoPlaceDetailsPage> {
+  bool _isDescriptionExpanded = false;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _aboutSectionKey = GlobalKey();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _expandDescription() {
+    setState(() {
+      _isDescriptionExpanded = true;
+    });
+    // Scroll to about section
+    Future.delayed(const Duration(milliseconds: 100), () {
+      final context = _aboutSectionKey.currentContext;
+      if (context != null) {
+        Scrollable.ensureVisible(
+          context,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -34,13 +66,54 @@ class TravoPlaceDetailsPage extends StatelessWidget {
           Column(
             children: [
               _hero(context),
-              Expanded(child: _content()),
+              Expanded(child: _content(context)),
             ],
           ),
           _bottomCTA(context),
         ],
       ),
     );
+  }
+
+  Widget _buildDescriptionText() {
+    final fullDescription = widget.description ??
+        '''Discover the beauty and charm of this amazing destination. Experience unforgettable moments and create lasting memories in this wonderful place.
+
+This destination offers a perfect blend of natural beauty, rich culture, and modern amenities. Whether you're seeking adventure, relaxation, or cultural immersion, you'll find it all here.
+
+Key Highlights:
+• Stunning natural landscapes and scenic views
+• Rich cultural heritage and local traditions
+• World-class accommodations and dining options
+• Variety of activities for all age groups
+• Excellent transportation and connectivity
+• Safe and welcoming environment for travelers
+
+The best time to visit is during the dry season when the weather is pleasant and ideal for outdoor activities. Local guides are available to help you explore hidden gems and experience authentic local culture.
+
+Don't miss the opportunity to try local cuisine, visit traditional markets, and interact with friendly locals who are always eager to share their stories and traditions.''';
+
+    if (_isDescriptionExpanded) {
+      return Text(
+        fullDescription,
+        style: const TextStyle(
+          color: AppColors.textSecondary,
+          height: 1.6,
+        ),
+      );
+    } else {
+      final shortDescription = widget.description ??
+          'Discover the beauty and charm of this amazing destination. Experience unforgettable moments and create lasting memories in this wonderful place. ';
+      return Text(
+        shortDescription,
+        style: const TextStyle(
+          color: AppColors.textSecondary,
+          height: 1.6,
+        ),
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      );
+    }
   }
 
   // ---------------- HERO ----------------
@@ -51,7 +124,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.network(
-            imageUrl,
+            widget.imageUrl,
             fit: BoxFit.cover,
           ),
           Container(
@@ -104,7 +177,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        widget.title,
                         style: const TextStyle(
                           color: AppColors.textOnPrimary,
                           fontSize: 28,
@@ -121,7 +194,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            location,
+                            widget.location,
                             style: const TextStyle(color: Colors.white70),
                           ),
                         ],
@@ -143,7 +216,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                       const Icon(Icons.star, size: 16, color: AppColors.warning),
                       const SizedBox(width: 4),
                       Text(
-                        rating.toString(),
+                        widget.rating.toString(),
                         style: const TextStyle(
                           color: AppColors.textOnPrimary,
                           fontWeight: FontWeight.bold,
@@ -181,35 +254,36 @@ class TravoPlaceDetailsPage extends StatelessWidget {
   }
 
   // ---------------- CONTENT ----------------
-  Widget _content() {
+  Widget _content(BuildContext context) {
     return SingleChildScrollView(
+      controller: _scrollController,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'About Destination',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Container(
+            key: _aboutSectionKey,
+            child: const Text(
+              'About Destination',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(height: 8),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: description ??
-                      'Discover the beauty and charm of this amazing destination. Experience unforgettable moments and create lasting memories in this wonderful place. ',
-                  style: const TextStyle(color: AppColors.textSecondary, height: 1.6),
-                ),
-                const TextSpan(
-                  text: 'Read more',
+          _buildDescriptionText(),
+          if (!_isDescriptionExpanded)
+            GestureDetector(
+              onTap: _expandDescription,
+              child: const Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: Text(
+                  'Read more',
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
           const SizedBox(height: 20),
           const Text(
             'Explore',
@@ -219,10 +293,11 @@ class TravoPlaceDetailsPage extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) {
               final exploreItems = [
-                const _ExploreItem(
+                _ExploreItem(
                   icon: Icons.info,
                   label: 'Overview',
                   color: Colors.blue,
+                  onTap: _expandDescription,
                 ),
                 _ExploreItem(
                   icon: Icons.bed,
@@ -286,8 +361,8 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PlaceGroupChatPage(
-                          placeName: title,
-                          placeImage: imageUrl,
+                          placeName: widget.title,
+                          placeImage: widget.imageUrl,
                         ),
                       ),
                     );
@@ -302,8 +377,8 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PlaceReviewsPage(
-                          placeName: title,
-                          placeRating: rating,
+                          placeName: widget.title,
+                          placeRating: widget.rating,
                         ),
                       ),
                     );
@@ -353,10 +428,10 @@ class TravoPlaceDetailsPage extends StatelessWidget {
             height: 220,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: nearbyPlacesMap[title]?.length ?? defaultNearbyPlaces.length,
+              itemCount: nearbyPlacesMap[widget.title]?.length ?? defaultNearbyPlaces.length,
               separatorBuilder: (context, index) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
-                final places = nearbyPlacesMap[title] ?? defaultNearbyPlaces;
+                final places = nearbyPlacesMap[widget.title] ?? defaultNearbyPlaces;
                 final place = places[index];
                 return _NearbyPlaceCard(
                   imageUrl: place.imageUrl,
@@ -420,10 +495,10 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                             
                             // Create new trip item from place details
                             final newDestination = tripService.createTripItemFromPlace(
-                              title: title,
-                              location: location,
-                              imageUrl: imageUrl,
-                              rating: rating,
+                              title: widget.title,
+                              location: widget.location,
+                              imageUrl: widget.imageUrl,
+                              rating: widget.rating,
                             );
                             
                             // Add to current trip
@@ -431,7 +506,7 @@ class TravoPlaceDetailsPage extends StatelessWidget {
                             
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('$title added to ${tripService.currentTripName}'),
+                                content: Text('${widget.title} added to ${tripService.currentTripName}'),
                                 behavior: SnackBarBehavior.floating,
                                 duration: const Duration(seconds: 2),
                                 action: SnackBarAction(
