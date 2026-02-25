@@ -36,6 +36,7 @@ class TravoApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: (settings) {
         Widget page;
+        bool isMainPage = false; // Track if it's a main navbar page
 
         switch (settings.name) {
           case '/':
@@ -58,9 +59,11 @@ class TravoApp extends StatelessWidget {
             break;
           case '/home':
             page = const HomeScreenPage();
+            isMainPage = true;
             break;
           case '/ai-chat':
             page = const AiChatPage();
+            isMainPage = true;
             break;
           case '/profile':
             page = const ProfilePage();
@@ -70,6 +73,7 @@ class TravoApp extends StatelessWidget {
             break;
           case '/story':
             page = const MyStoriesPage();
+            isMainPage = true;
             break;
           case '/story-details':
             final trip = settings.arguments as SavedTrip?;
@@ -90,15 +94,22 @@ class TravoApp extends StatelessWidget {
             break;
           case '/adventure':
             page = const TravoAdventurePage();
+            isMainPage = true;
             break;
           case '/map':
             page = const MapPage();
+            isMainPage = true;
             break;
           default:
             page = const WelcomePage();
         }
 
-        return SlideRightRoute(page: page, settings: settings);
+        // Use NoTransitionRoute for main navbar pages, SlideRightRoute for others
+        if (isMainPage) {
+          return NoTransitionRoute(page: page, settings: settings);
+        } else {
+          return SlideRightRoute(page: page, settings: settings);
+        }
       },
     );
   }

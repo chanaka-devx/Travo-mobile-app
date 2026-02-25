@@ -27,3 +27,19 @@ class SlideRightRoute extends PageRouteBuilder {
           reverseTransitionDuration: const Duration(milliseconds: 300),
         );
 }
+
+// No transition route for instant page loading (used for main navbar pages)
+class NoTransitionRoute extends PageRouteBuilder {
+  final Widget page;
+
+  NoTransitionRoute({required this.page, RouteSettings? settings})
+      : super(
+          settings: settings,
+          pageBuilder: (context, animation, secondaryAnimation) => page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child; // No transition, instant display
+          },
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        );
+}
