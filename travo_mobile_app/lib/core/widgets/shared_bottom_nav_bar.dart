@@ -69,7 +69,11 @@ class SharedBottomNavBar extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (activeRoute != '/ai-chat') {
-                    Navigator.pushNamed(context, '/ai-chat');
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/ai-chat',
+                      (route) => false,
+                    );
                   }
                 },
                 child: Container(
@@ -124,7 +128,12 @@ class _BottomNavItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!active) {
-          Navigator.pushNamed(context, route);
+          // Clear navigation stack and navigate to route
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            route,
+            (route) => false,
+          );
         }
       },
       child: Column(

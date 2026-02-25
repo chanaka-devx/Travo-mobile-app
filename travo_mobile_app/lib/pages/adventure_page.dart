@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../core/constants/app_colors.dart';
 import '../data/adventure_data.dart';
 import '../core/services/trip_data_service.dart';
@@ -68,9 +69,42 @@ class _TravoAdventurePageState extends State<TravoAdventurePage>
     super.dispose();
   }
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App'),
+        content: const Text('Do you want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Exit'),
+          ),
+        ],
+      ),
+    );
+    
+    if (shouldExit == true) {
+      SystemNavigator.pop();
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (!didPop) {
+          await _onWillPop(context);
+        }
+      },
+      child: Scaffold(
       backgroundColor: const Color(0xFFF8FAFB),
       body: SafeArea(
         child: Column(
@@ -89,6 +123,7 @@ class _TravoAdventurePageState extends State<TravoAdventurePage>
         ),
       ),
       bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/adventure'),
+      ),
     );
   }
 

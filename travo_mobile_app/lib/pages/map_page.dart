@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../core/constants/app_colors.dart';
 import '../core/widgets/shared_bottom_nav_bar.dart';
 import '../data/adventure_data.dart';
@@ -81,6 +82,32 @@ class _MapPageState extends State<MapPage> {
     super.dispose();
   }
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App'),
+        content: const Text('Do you want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Exit'),
+          ),
+        ],
+      ),
+    );
+    
+    if (shouldExit == true) {
+      SystemNavigator.pop();
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).padding.bottom;
@@ -106,7 +133,14 @@ class _MapPageState extends State<MapPage> {
       mapUrl = 'https://staticmap.openstreetmap.de/staticmap.php?center=$avgLat,$avgLng&zoom=$zoom&size=600x1200&maptype=mapnik';
     }
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (!didPop) {
+          await _onWillPop(context);
+        }
+      },
+      child: Scaffold(
       body: Stack(
         children: [
           // Static map background
@@ -356,6 +390,7 @@ class _MapPageState extends State<MapPage> {
         ],
       ),
       bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/map'),
+      ),
     );
   }
 

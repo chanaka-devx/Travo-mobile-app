@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../core/constants/app_colors.dart';
 import '../core/widgets/shared_bottom_nav_bar.dart';
 import '../data/sri_lankan_destinations.dart';
@@ -6,9 +7,42 @@ import '../data/sri_lankan_destinations.dart';
 class HomeScreenPage extends StatelessWidget {
   const HomeScreenPage({super.key});
 
+  Future<bool> _onWillPop(BuildContext context) async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App'),
+        content: const Text('Do you want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Exit'),
+          ),
+        ],
+      ),
+    );
+    
+    if (shouldExit == true) {
+      SystemNavigator.pop();
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (!didPop) {
+          await _onWillPop(context);
+        }
+      },
+      child: Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -225,6 +259,7 @@ class HomeScreenPage extends StatelessWidget {
 
       // ===== SHARED BOTTOM NAV BAR ===
       bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/home'),
+      ),
     );
   }
 }
