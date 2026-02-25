@@ -4,6 +4,7 @@ import '../core/constants/app_colors.dart';
 import '../core/widgets/shared_bottom_nav_bar.dart';
 import '../data/adventure_data.dart';
 import '../core/services/trip_data_service.dart';
+import 'place_details_page.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -141,6 +142,7 @@ class _MapPageState extends State<MapPage> {
         }
       },
       child: Scaffold(
+      backgroundColor: const Color(0xFFE5E3DF),
       body: Stack(
         children: [
           // Static map background
@@ -783,7 +785,20 @@ class _PlaceDetailsBottomSheet extends StatelessWidget {
                           flex: 2,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              Navigator.pop(context);
+                              final navigator = Navigator.of(context);
+                              onClose();
+                              Future.delayed(const Duration(milliseconds: 100), () {
+                                navigator.push(
+                                  MaterialPageRoute(
+                                    builder: (context) => TravoPlaceDetailsPage(
+                                      title: tripItem.title,
+                                      location: tripItem.location,
+                                      imageUrl: tripItem.mapImage,
+                                      rating: 4.5,
+                                    ),
+                                  ),
+                                );
+                              });
                             },
                             icon: const Icon(
                               Icons.info_outline,

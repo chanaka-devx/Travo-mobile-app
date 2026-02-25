@@ -4,6 +4,7 @@ import '../core/constants/app_colors.dart';
 import '../data/adventure_data.dart';
 import '../core/services/trip_data_service.dart';
 import '../core/widgets/shared_bottom_nav_bar.dart';
+import 'place_details_page.dart';
 
 class TravoAdventurePage extends StatefulWidget {
   const TravoAdventurePage({super.key});
@@ -533,195 +534,212 @@ class _TravoAdventurePageState extends State<TravoAdventurePage>
   }) {
     return ReorderableDelayedDragStartListener(
       index: itemIndex,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => _showEditDestinationDialog(item, itemIndex),
-          borderRadius: BorderRadius.circular(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundColor: item.index == 1
-                        ? AppColors.primary
-                        : AppColors.surface,
-                    foregroundColor: item.index == 1
-                        ? AppColors.textOnPrimary
-                        : AppColors.primary,
-                    child: Text(
-                      item.index.toString(),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Timeline indicator
+          Column(
+            children: [
+              CircleAvatar(
+                radius: 16,
+                backgroundColor: item.index == 1
+                    ? AppColors.primary
+                    : AppColors.surface,
+                foregroundColor: item.index == 1
+                    ? AppColors.textOnPrimary
+                    : AppColors.primary,
+                child: Text(
+                  item.index.toString(),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
                   ),
-                  if (!isLast) ...[
-                    const SizedBox(height: 16),
-                    Container(width: 2, height: 80, color: AppColors.divider),
-                  ],
-                ],
+                ),
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            item.subtitle,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          item.tag.toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
-                          ),
-                        ),
+              if (!isLast) ...[
+                const SizedBox(height: 8),
+                Container(width: 2, height: 150, color: AppColors.divider),
+              ],
+            ],
+          ),
+          const SizedBox(width: 12),
+          // Card with all trip details
+          Expanded(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => _showEditDestinationDialog(item, itemIndex),
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.divider),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: AppColors.surface,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: AppColors.divider),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'STAY',
-                                style: TextStyle(
-                                  fontSize: 9,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                item.stay,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  Icon(
-                                    item.icon,
-                                    size: 14,
-                                    color: item.iconColor ?? AppColors.primary,
+                      // Destination header
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    item.stayInfo,
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: item.iconColor ?? AppColors.primary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  item.subtitle,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.textSecondary,
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/map',
-                            arguments: {
-                              'tripItems': _currentTripItems,
-                              'selectedIndex': itemIndex,
-                              'tripName': _selectedTrip.name,
-                            },
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(14),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: AppColors.divider),
-                            image: DecorationImage(
-                              image: NetworkImage(item.mapImage),
-                              fit: BoxFit.cover,
-                              opacity: 0.6,
+                                ),
+                              ],
                             ),
                           ),
-                          child: Center(
-                            child: CircleAvatar(
-                              radius: 14,
-                              backgroundColor: AppColors.surface.withValues(
-                                alpha: 0.7,
-                              ),
-                              child: const Icon(
-                                Icons.location_on,
-                                size: 16,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              item.tag.toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
                                 color: AppColors.primary,
                               ),
                             ),
                           ),
-                        ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      // Stay details
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'STAY',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: AppColors.textSecondary,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  item.stay,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      item.icon,
+                                      size: 16,
+                                      color: item.iconColor ?? AppColors.primary,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      item.stayInfo,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: item.iconColor ?? AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          // Map preview
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/map',
+                                arguments: {
+                                  'tripItems': _currentTripItems,
+                                  'selectedIndex': itemIndex,
+                                  'tripName': _selectedTrip.name,
+                                },
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: AppColors.divider),
+                                image: DecorationImage(
+                                  image: NetworkImage(item.mapImage),
+                                  fit: BoxFit.cover,
+                                  opacity: 0.6,
+                                ),
+                              ),
+                              child: Center(
+                                child: CircleAvatar(
+                                  radius: 16,
+                                  backgroundColor: AppColors.surface.withValues(
+                                    alpha: 0.9,
+                                  ),
+                                  child: const Icon(
+                                    Icons.location_on,
+                                    size: 18,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
-            const SizedBox(width: 8),
-            Icon(
+          ),
+          const SizedBox(width: 8),
+          // Drag handle
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Icon(
               Icons.drag_handle,
               color: AppColors.textSecondary,
               size: 20,
             ),
-          ],
-        ),
-      ),
+          ),
+        ],
       ),
     );
   }
@@ -836,6 +854,35 @@ class _TravoAdventurePageState extends State<TravoAdventurePage>
                             fontSize: 13,
                             color: AppColors.textPrimary,
                             height: 1.5,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 8),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Future.delayed(const Duration(milliseconds: 100), () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TravoPlaceDetailsPage(
+                                    title: item.title,
+                                    location: item.location,
+                                    imageUrl: item.mapImage,
+                                    rating: 4.5,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          child: const Text(
+                            'See more',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
