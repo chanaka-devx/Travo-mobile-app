@@ -49,6 +49,27 @@ class TripDataService {
     _version++; // Increment version to track changes
   }
   
+  // Add destination at specific position (for My Location feature)
+  void addDestinationAtPosition(TripItem newItem, int position) {
+    // Insert at the specified position
+    _currentTripItems.insert(position, newItem);
+    // Re-index all items
+    for (int i = 0; i < _currentTripItems.length; i++) {
+      _currentTripItems[i].index = i + 1;
+    }
+    _version++; // Increment version to track changes
+  }
+  
+  // Get the position where new location should be added
+  // Returns 0 if journey hasn't started, otherwise position after current location
+  int getInsertPosition() {
+    if (_currentTripItems.isEmpty) return 0;
+    // If we haven't started (selectedIndex is 0), add at beginning
+    if (_selectedIndex == 0) return 0;
+    // Otherwise add after the current/visited location
+    return _selectedIndex + 1;
+  }
+  
   // Create a TripItem from basic place info
   TripItem createTripItemFromPlace({
     required String title,

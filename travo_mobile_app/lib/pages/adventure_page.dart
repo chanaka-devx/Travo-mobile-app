@@ -542,10 +542,10 @@ class _TravoAdventurePageState extends State<TravoAdventurePage>
             children: [
               CircleAvatar(
                 radius: 16,
-                backgroundColor: item.index == 1
+                backgroundColor: item.index <= 2
                     ? AppColors.primary
                     : AppColors.surface,
-                foregroundColor: item.index == 1
+                foregroundColor: item.index <= 2
                     ? AppColors.textOnPrimary
                     : AppColors.primary,
                 child: Text(

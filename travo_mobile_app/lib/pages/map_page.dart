@@ -109,6 +109,74 @@ class _MapPageState extends State<MapPage> {
     return false;
   }
 
+  void _addMyLocationToTrip() async {
+    final tripService = TripDataService();
+    
+    if (!tripService.hasCurrentTrip) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please create a trip first in the Plans tab'),
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    
+    // Create a new trip item for "My Location"
+    final myLocationItem = TripItem(
+      index: 0, // Will be set by the service
+      title: 'My Current Location',
+      subtitle: DateTime.now().toString().split(' ')[0],
+      tag: 'CURRENT',
+      stay: 'Visiting now',
+      stayInfo: 'Current position',
+      icon: Icons.my_location,
+      iconColor: AppColors.accent,
+      mapImage: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400',
+      location: 'Your current location',
+      nights: 0,
+      priority: 'High',
+      budget: 0.0,
+      aiSummary: 'Your current location has been added to the itinerary.',
+      latitude: 6.9271, // Sample coordinates (Colombo, Sri Lanka)
+      longitude: 79.8612,
+    );
+    
+    // Get the position where this should be inserted
+    final insertPosition = tripService.getInsertPosition();
+    
+    // Add to trip service
+    tripService.addDestinationAtPosition(myLocationItem, insertPosition);
+    
+    // Also add to local state to show on map immediately
+    setState(() {
+      _tripItems.insert(insertPosition, myLocationItem);
+      // Re-index all items
+      for (int i = 0; i < _tripItems.length; i++) {
+        _tripItems[i].index = i + 1;
+      }
+      // Update selected index to the new location
+      _selectedLocationIndex = insertPosition;
+      _showPlaceDetails = true;
+    });
+    
+    // Show success message and navigate
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Location added at position ${insertPosition + 1}'),
+        duration: const Duration(seconds: 1),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    
+    // Navigate to adventure page after a short delay
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (mounted) {
+      Navigator.pushNamed(context, '/adventure');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).padding.bottom;
@@ -389,6 +457,35 @@ class _MapPageState extends State<MapPage> {
                 },
               ),
             ),
+          
+          // My Location Button (bottom left)
+          Positioned(
+            left: 16,
+            bottom: 100 + bottomInset,
+            child: GestureDetector(
+              onTap: _addMyLocationToTrip,
+              child: Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.add_location,
+                  color: Colors.white,
+                  size: 32,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: const SharedBottomNavBar(activeRoute: '/map'),
